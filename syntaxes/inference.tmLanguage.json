@@ -463,6 +463,7 @@
       ]
     },
     "sql-heredoc-inject": {
+      "comment": "Injected into string.unquoted.heredoc.php and string.unquoted.nowdoc.php; end:(?!) never matches so the span extends to the end of the enclosing scope",
       "begin": "(?=\\b(?:SELECT|INSERT|UPDATE|DELETE|CREATE|REPLACE|ALTER|WITH)\\b)",
       "end": "(?!)",
       "contentName": "source.sql.embedded.php",
@@ -477,6 +478,7 @@
       ]
     },
     "xml-heredoc-inject": {
+      "comment": "Injected into string.unquoted.heredoc.php and string.unquoted.nowdoc.php; end:(?!) never matches so the span extends to the end of the enclosing scope",
       "begin": "(?=[ \\t]*(?:<\\?xml|<svg)\\b)",
       "end": "(?!)",
       "contentName": "text.xml.embedded.php",
@@ -491,6 +493,7 @@
       ]
     },
     "html-heredoc-inject": {
+      "comment": "Injected into string.unquoted.heredoc.php and string.unquoted.nowdoc.php; end:(?!) never matches so the span extends to the end of the enclosing scope",
       "begin": "(?=[ \\t]*</?(?!script\\b)[A-Za-z][A-Za-z0-9]*\\b)",
       "end": "(?!)",
       "contentName": "text.html.embedded.php",
