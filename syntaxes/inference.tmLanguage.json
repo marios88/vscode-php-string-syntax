@@ -1,6 +1,6 @@
 {
   "scopeName": "source.php.inference",
-  "injectionSelector": "L:source.php -comment -string -(string source.php) -text.html.php.blade",
+  "injectionSelector": "L:source.php -comment -string -(string source.php) -text.html.php.blade, L:string.unquoted.heredoc.php, L:string.unquoted.nowdoc.php",
   "patterns": [
     {
       "include": "source.php#regex-double-quoted"
@@ -13,6 +13,15 @@
     },
     {
       "include": "#string-single-quoted"
+    },
+    {
+      "include": "#sql-heredoc-inject"
+    },
+    {
+      "include": "#xml-heredoc-inject"
+    },
+    {
+      "include": "#html-heredoc-inject"
     }
   ],
   "repository": {
@@ -450,6 +459,48 @@
         },
         {
           "include": "text.xml"
+        }
+      ]
+    },
+    "sql-heredoc-inject": {
+      "begin": "(?=\\b(?:SELECT|INSERT|UPDATE|DELETE|CREATE|REPLACE|ALTER|WITH)\\b)",
+      "end": "(?!)",
+      "contentName": "source.sql.embedded.php",
+      "name": "string.unquoted.heredoc.sql.php",
+      "patterns": [
+        {
+          "include": "source.php#interpolation_double_quoted"
+        },
+        {
+          "include": "source.sql"
+        }
+      ]
+    },
+    "xml-heredoc-inject": {
+      "begin": "(?=[ \\t]*(?:<\\?xml|<svg)\\b)",
+      "end": "(?!)",
+      "contentName": "text.xml.embedded.php",
+      "name": "string.unquoted.heredoc.xml.php",
+      "patterns": [
+        {
+          "include": "source.php#interpolation_double_quoted"
+        },
+        {
+          "include": "text.xml"
+        }
+      ]
+    },
+    "html-heredoc-inject": {
+      "begin": "(?=[ \\t]*</?(?!script\\b)[A-Za-z][A-Za-z0-9]*\\b)",
+      "end": "(?!)",
+      "contentName": "text.html.embedded.php",
+      "name": "string.unquoted.heredoc.html.php",
+      "patterns": [
+        {
+          "include": "source.php#interpolation_double_quoted"
+        },
+        {
+          "include": "text.html.basic"
         }
       ]
     },

@@ -7,9 +7,84 @@
     },
     {
       "include": "#xml-string-single-quoted"
+    },
+    {
+      "include": "#xml-heredoc"
+    },
+    {
+      "include": "#xml-nowdoc"
     }
   ],
   "repository": {
+    "xml-nowdoc": {
+      "begin": "(/\\*\\s?xml\\s?\\*/|/\\*\\s?svg\\s?\\*/)\\s*(<<<)(')([A-Za-z_][A-Za-z_0-9]*)\\3(?:\\r?\\n)",
+      "beginCaptures": {
+        "1": {
+          "name": "comment.block.php"
+        },
+        "2": {
+          "name": "punctuation.definition.string.begin.php"
+        },
+        "3": {
+          "name": "punctuation.definition.string.begin.php"
+        },
+        "4": {
+          "name": "keyword.operator.nowdoc.php"
+        }
+      },
+      "end": "^(\\4)(;?)",
+      "endCaptures": {
+        "1": {
+          "name": "keyword.operator.nowdoc.php"
+        },
+        "2": {
+          "name": "punctuation.terminator.expression.php"
+        }
+      },
+      "name": "string.unquoted.nowdoc.php",
+      "contentName": "text.xml.embedded.php",
+      "patterns": [
+        {
+          "include": "text.xml"
+        }
+      ]
+    },
+    "xml-heredoc": {
+      "begin": "(/\\*\\s?xml\\s?\\*/|/\\*\\s?svg\\s?\\*/)\\s*(<<<)(\"?)([A-Za-z_][A-Za-z_0-9]*)\\3(?:\\r?\\n)",
+      "beginCaptures": {
+        "1": {
+          "name": "comment.block.php"
+        },
+        "2": {
+          "name": "punctuation.definition.string.begin.php"
+        },
+        "3": {
+          "name": "punctuation.definition.string.begin.php"
+        },
+        "4": {
+          "name": "keyword.operator.heredoc.php"
+        }
+      },
+      "end": "^(\\4)(;?)",
+      "endCaptures": {
+        "1": {
+          "name": "keyword.operator.heredoc.php"
+        },
+        "2": {
+          "name": "punctuation.terminator.expression.php"
+        }
+      },
+      "name": "string.unquoted.heredoc.php",
+      "contentName": "text.xml.embedded.php",
+      "patterns": [
+        {
+          "include": "source.php#interpolation_double_quoted"
+        },
+        {
+          "include": "text.xml"
+        }
+      ]
+    },
     "xml-string-double-quoted": {
       "begin": "(/\\*\\s?xml\\s?\\*/|/\\*\\s?svg\\s?\\*/)\\s*(\")",
       "beginCaptures": {
