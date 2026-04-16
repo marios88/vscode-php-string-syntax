@@ -45,7 +45,7 @@
       "contentName": "meta.embedded.block.html.php text.html.embedded.php",
       "patterns": [
         {
-          "include": "#html-nowdoc-content"
+          "include": "text.html.basic"
         }
       ]
     },
@@ -78,149 +78,7 @@
       "contentName": "meta.embedded.block.html.php text.html.embedded.php",
       "patterns": [
         {
-          "include": "#html-heredoc-content"
-        }
-      ]
-    },
-    "html-heredoc-content": {
-      "patterns": [
-        {
-          "begin": "(<)([a-zA-Z][a-zA-Z0-9]*)",
-          "end": "(?=(>|\\/>)|$)",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.begin.html"
-            },
-            "2": {
-              "name": "entity.name.tag.html"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.end.html"
-            }
-          },
-          "patterns": [
-            {
-              "begin": "\\s*([a-zA-Z0-9:-]+)\\s*(=)\\s*",
-              "beginCaptures": {
-                "1": {
-                  "name": "entity.other.attribute-name.html"
-                },
-                "2": {
-                  "name": "punctuation.separator.key-value.html"
-                }
-              },
-              "end": "(?<=\")|(?<=')|(?=[\\s/>]|$)",
-              "patterns": [
-                {
-                  "begin": "\"",
-                  "end": "\"",
-                  "name": "string.quoted.double.html",
-                  "patterns": [
-                    {
-                      "include": "source.php#interpolation_double_quoted"
-                    }
-                  ]
-                },
-                {
-                  "begin": "'",
-                  "end": "'",
-                  "name": "string.quoted.single.html",
-                  "patterns": [
-                    {
-                      "include": "source.php#interpolation_double_quoted"
-                    }
-                  ]
-                },
-                {
-                  "match": "[^\\s/>]+",
-                  "name": "string.unquoted.html",
-                  "patterns": [
-                    {
-                      "include": "source.php#interpolation_double_quoted"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "match": "\\s*([a-zA-Z0-9:-]+)(?=[\\s/>]|$)",
-              "captures": {
-                "1": {
-                  "name": "entity.other.attribute-name.html"
-                }
-              }
-            },
-            {
-              "include": "source.php#interpolation_double_quoted"
-            }
-          ]
-        },
-        {
           "include": "source.php#interpolation_double_quoted"
-        },
-        {
-          "include": "text.html.basic"
-        }
-      ]
-    },
-    "html-nowdoc-content": {
-      "patterns": [
-        {
-          "begin": "(<)([a-zA-Z][a-zA-Z0-9]*)",
-          "end": "(?=(>|\\/>)|$)",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.begin.html"
-            },
-            "2": {
-              "name": "entity.name.tag.html"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.end.html"
-            }
-          },
-          "patterns": [
-            {
-              "begin": "\\s*([a-zA-Z0-9:-]+)\\s*(=)\\s*",
-              "beginCaptures": {
-                "1": {
-                  "name": "entity.other.attribute-name.html"
-                },
-                "2": {
-                  "name": "punctuation.separator.key-value.html"
-                }
-              },
-              "end": "(?<=\")|(?<=')|(?=[\\s/>]|$)",
-              "patterns": [
-                {
-                  "begin": "\"",
-                  "end": "\"",
-                  "name": "string.quoted.double.html"
-                },
-                {
-                  "begin": "'",
-                  "end": "'",
-                  "name": "string.quoted.single.html"
-                },
-                {
-                  "match": "[^\\s/>]+",
-                  "name": "string.unquoted.html"
-                }
-              ]
-            },
-            {
-              "match": "\\s*([a-zA-Z0-9:-]+)(?=[\\s/>]|$)",
-              "captures": {
-                "1": {
-                  "name": "entity.other.attribute-name.html"
-                }
-              }
-            }
-          ]
         },
         {
           "include": "text.html.basic"

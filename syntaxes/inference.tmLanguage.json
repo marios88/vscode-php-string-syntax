@@ -233,7 +233,7 @@
       ]
     },
     "html-string-double-quoted": {
-      "begin": "\\s*(?=(</?(?!script\\b)[A-Za-z][A-Za-z0-9]*)\\b)",
+      "begin": "\\s*(?=</?[A-Za-z][A-Za-z0-9]*\\b)",
       "contentName": "meta.embedded.block.html.php text.html.embedded.php",
       "end": "(?=\")",
       "endCaptures": {
@@ -244,83 +244,48 @@
       "name": "string.quoted.double.html.php",
       "patterns": [
         {
-          "begin": "(<)([a-zA-Z][a-zA-Z0-9]*)",
-          "end": "(?=(>|\\/>)|(?=\"))",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.begin.html"
-            },
-            "2": {
-              "name": "entity.name.tag.html"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.end.html"
-            }
-          },
-          "patterns": [
-            {
-              "begin": "\\s*([a-zA-Z0-9:-]+)\\s*(=)\\s*",
-              "beginCaptures": {
-                "1": {
-                  "name": "entity.other.attribute-name.html"
-                },
-                "2": {
-                  "name": "punctuation.separator.key-value.html"
-                }
-              },
-              "end": "(?<=\")|(?<=')|(?=[\\s/>]|\")",
-              "patterns": [
-                {
-                  "begin": "\"",
-                  "end": "\"",
-                  "name": "string.quoted.double.html",
-                  "patterns": [
-                    {
-                      "include": "source.php#interpolation_double_quoted"
-                    }
-                  ]
-                },
-                {
-                  "begin": "'",
-                  "end": "'|(?=\")",
-                  "name": "string.quoted.single.html",
-                  "patterns": [
-                    {
-                      "include": "source.php#interpolation_double_quoted"
-                    }
-                  ]
-                },
-                {
-                  "match": "[^\\s/>\"]+",
-                  "name": "string.unquoted.html",
-                  "patterns": [
-                    {
-                      "include": "source.php#interpolation_double_quoted"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "match": "\\s*([a-zA-Z0-9:-]+)",
-              "captures": {
-                "1": {
-                  "name": "entity.other.attribute-name.html"
-                }
-              }
-            },
-            {
-              "include": "source.php#interpolation_double_quoted"
-            }
-          ]
+          "include": "source.php#interpolation_double_quoted"
         },
+        {
+          "include": "#embedded-script-string-double-quoted"
+        },
+        {
+          "include": "text.html.basic"
+        }
+      ]
+    },
+    "embedded-script-string-double-quoted": {
+      "begin": "(<)((?i:script))\\b(?:[^>]|\\\\.)*(>)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "entity.name.tag.html"
+        },
+        "3": {
+          "name": "punctuation.definition.tag.end.html"
+        }
+      },
+      "end": "(?:(</)((?i:script))(\\s*>))|(?<!\\\\)(?=\")",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "entity.name.tag.html"
+        },
+        "3": {
+          "name": "punctuation.definition.tag.end.html"
+        }
+      },
+      "name": "meta.embedded.block.html",
+      "patterns": [
         {
           "include": "source.php#interpolation_double_quoted"
         },
         {
-          "include": "text.html.basic"
+          "include": "source.js"
         }
       ]
     },
@@ -453,164 +418,9 @@
         }
       ]
     },
-    "xml-heredoc-content": {
-      "patterns": [
-        {
-          "begin": "(<\\??)([a-zA-Z][a-zA-Z0-9]*)",
-          "end": "(?=(>|\\?>|\\/>)|$)",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.begin.xml"
-            },
-            "2": {
-              "name": "entity.name.tag.xml"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.end.xml"
-            }
-          },
-          "patterns": [
-            {
-              "begin": "\\s*([a-zA-Z0-9:-]+)\\s*(=)\\s*",
-              "beginCaptures": {
-                "1": {
-                  "name": "entity.other.attribute-name.xml"
-                },
-                "2": {
-                  "name": "punctuation.separator.key-value.xml"
-                }
-              },
-              "end": "(?<=\")|(?<=')|(?=[\\s/>]|$)",
-              "patterns": [
-                {
-                  "begin": "\"",
-                  "end": "\"",
-                  "name": "string.quoted.double.xml"
-                },
-                {
-                  "begin": "'",
-                  "end": "'",
-                  "name": "string.quoted.single.xml"
-                },
-                {
-                  "match": "[^\\s/>]+",
-                  "name": "string.unquoted.xml"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "include": "text.xml"
-        }
-      ]
-    },
-    "sql-heredoc-inject": {
-      "comment": "Injected into string.unquoted.heredoc.php and string.unquoted.nowdoc.php; while keeps the rule active for each subsequent line until the enclosing heredoc/nowdoc scope ends",
-      "begin": "(?=\\b(?:SELECT|INSERT|UPDATE|DELETE|CREATE|REPLACE|ALTER|WITH)\\b)",
-      "while": "(^|\\G)",
-      "contentName": "meta.embedded.block.sql.php source.sql.embedded.php",
-      "name": "string.unquoted.heredoc.sql.php",
-      "patterns": [
-        {
-          "include": "source.php#interpolation_double_quoted"
-        },
-        {
-          "include": "source.sql"
-        }
-      ]
-    },
-    "xml-heredoc-inject": {
-      "comment": "Injected into string.unquoted.heredoc.php and string.unquoted.nowdoc.php; while keeps the rule active for each subsequent line until the enclosing heredoc/nowdoc scope ends",
-      "begin": "(?=[ \\t]*(?:<\\?xml|<svg)\\b)",
-      "while": "(^|\\G)",
-      "contentName": "meta.embedded.block.xml.php text.xml.embedded.php",
-      "name": "string.unquoted.heredoc.xml.php",
-      "patterns": [
-        {
-          "include": "#xml-heredoc-content"
-        }
-      ]
-    },
-    "html-heredoc-inject": {
-      "comment": "Injected into string.unquoted.heredoc.php and string.unquoted.nowdoc.php; while keeps the rule active for each subsequent line until the enclosing heredoc/nowdoc scope ends",
-      "begin": "(?=[ \\t]*</?(?!script\\b)[A-Za-z][A-Za-z0-9]*\\b)",
-      "while": "(^|\\G)",
-      "contentName": "meta.embedded.block.html.php text.html.embedded.php",
-      "name": "string.unquoted.heredoc.html.php",
-      "patterns": [
-        {
-          "include": "#html-heredoc-content"
-        }
-      ]
-    },
-    "html-heredoc-content": {
-      "patterns": [
-        {
-          "begin": "(<)([a-zA-Z][a-zA-Z0-9]*)",
-          "end": "(?=(>|\\/>)|$)",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.begin.html"
-            },
-            "2": {
-              "name": "entity.name.tag.html"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.end.html"
-            }
-          },
-          "patterns": [
-            {
-              "begin": "\\s*([a-zA-Z0-9:-]+)\\s*(=)\\s*",
-              "beginCaptures": {
-                "1": {
-                  "name": "entity.other.attribute-name.html"
-                },
-                "2": {
-                  "name": "punctuation.separator.key-value.html"
-                }
-              },
-              "end": "(?<=\")|(?<=')|(?=[\\s/>]|$)",
-              "patterns": [
-                {
-                  "begin": "\"",
-                  "end": "\"",
-                  "name": "string.quoted.double.html"
-                },
-                {
-                  "begin": "'",
-                  "end": "'",
-                  "name": "string.quoted.single.html"
-                },
-                {
-                  "match": "[^\\s/>]+",
-                  "name": "string.unquoted.html"
-                }
-              ]
-            },
-            {
-              "match": "\\s*([a-zA-Z0-9:-]+)(?=[\\s/>]|$)",
-              "captures": {
-                "1": {
-                  "name": "entity.other.attribute-name.html"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "include": "text.html.basic"
-        }
-      ]
-    },
     "html-string-single-quoted": {
-      "begin": "\\s*(?=(</?(?!script\\b)[A-Za-z][A-Za-z0-9]*)\\b)",
-      "contentName": "text.html.embedded.php",
+      "begin": "\\s*(?=</?[A-Za-z][A-Za-z0-9]*\\b)",
+      "contentName": "meta.embedded.block.html.php text.html.embedded.php",
       "end": "(?=')",
       "endCaptures": {
         "0": {
@@ -624,78 +434,42 @@
           "name": "constant.character.escape.php"
         },
         {
-          "begin": "(<)([a-zA-Z][a-zA-Z0-9]*)",
-          "end": "(?=(>|\\/>)|(?='))",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.begin.html"
-            },
-            "2": {
-              "name": "entity.name.tag.html"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.end.html"
-            }
-          },
-          "patterns": [
-            {
-              "begin": "\\s*([a-zA-Z0-9:-]+)\\s*(=)\\s*",
-              "beginCaptures": {
-                "1": {
-                  "name": "entity.other.attribute-name.html"
-                },
-                "2": {
-                  "name": "punctuation.separator.key-value.html"
-                }
-              },
-              "end": "(?<=\")|(?<=')|(?=[\\s/>]|')",
-              "patterns": [
-                {
-                  "begin": "\"",
-                  "end": "\"|(?=')",
-                  "name": "string.quoted.double.html",
-                  "patterns": [
-                    {
-                      "match": "\\\\[\\\\']",
-                      "name": "constant.character.escape.php"
-                    }
-                  ]
-                },
-                {
-                  "begin": "'",
-                  "end": "'|(?=')",
-                  "name": "string.quoted.single.html",
-                  "patterns": [
-                    {
-                      "match": "\\\\[\\\\']",
-                      "name": "constant.character.escape.php"
-                    }
-                  ]
-                },
-                {
-                  "match": "[^\\s/>']+",
-                  "name": "string.unquoted.html"
-                }
-              ]
-            },
-            {
-              "match": "\\s*([a-zA-Z0-9:-]+)",
-              "captures": {
-                "1": {
-                  "name": "entity.other.attribute-name.html"
-                }
-              }
-            },
-            {
-              "match": "\\\\[\\\\']",
-              "name": "constant.character.escape.php"
-            }
-          ]
+          "include": "#embedded-script-string-single-quoted"
         },
         {
           "include": "text.html.basic"
+        }
+      ]
+    },
+    "embedded-script-string-single-quoted": {
+      "begin": "(<)((?i:script))\\b(?:[^>]|\\\\.)*(>)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "entity.name.tag.html"
+        },
+        "3": {
+          "name": "punctuation.definition.tag.end.html"
+        }
+      },
+      "end": "(?:(</)((?i:script))(\\s*>))|(?<!\\\\)(?=')",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "entity.name.tag.html"
+        },
+        "3": {
+          "name": "punctuation.definition.tag.end.html"
+        }
+      },
+      "name": "meta.embedded.block.html",
+      "patterns": [
+        {
+          "include": "source.js"
         }
       ]
     }

@@ -2,7 +2,7 @@
   "name": "php-string-syntax-dev",
   "displayName": "PHP String Syntax DEV",
   "description": "Syntax highlighting for HTML, SQL and JavaScript inside PHP strings",
-  "version": "0.1.13",
+  "version": "0.1.16",
   "publisher": "ericgomez",
   "icon": "images/logo.png",
   "license": "MIT",
