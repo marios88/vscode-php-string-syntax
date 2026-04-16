@@ -46,7 +46,7 @@
         }
       },
       "name": "string.unquoted.nowdoc.php",
-      "contentName": "source.sql.embedded.php",
+      "contentName": "meta.embedded.block.sql.php source.sql.embedded.php",
       "patterns": [
         {
           "include": "source.sql"
@@ -79,7 +79,7 @@
         }
       },
       "name": "string.unquoted.heredoc.php",
-      "contentName": "source.sql.embedded.php",
+      "contentName": "meta.embedded.block.sql.php source.sql.embedded.php",
       "patterns": [
         {
           "include": "source.php#interpolation_double_quoted"

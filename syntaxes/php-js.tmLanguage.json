@@ -42,7 +42,7 @@
         }
       },
       "name": "string.unquoted.nowdoc.php",
-      "contentName": "source.js.embedded.php",
+      "contentName": "meta.embedded.block.javascript.php source.js.embedded.php",
       "patterns": [
         {
           "include": "source.js"
@@ -75,7 +75,7 @@
         }
       },
       "name": "string.unquoted.heredoc.php",
-      "contentName": "source.js.embedded.php",
+      "contentName": "meta.embedded.block.javascript.php source.js.embedded.php",
       "patterns": [
         {
           "include": "source.php#interpolation_double_quoted"

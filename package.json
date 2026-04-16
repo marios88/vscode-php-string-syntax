@@ -1,8 +1,8 @@
 {
-  "name": "php-string-syntax",
-  "displayName": "PHP String Syntax",
+  "name": "php-string-syntax-dev",
+  "displayName": "PHP String Syntax DEV",
   "description": "Syntax highlighting for HTML, SQL and JavaScript inside PHP strings",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "publisher": "ericgomez",
   "icon": "images/logo.png",
   "license": "MIT",
@@ -19,35 +19,118 @@
         "scopeName": "source.php.inference",
         "injectTo": [
           "text.html.php"
-        ]
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.sql.php": "sql",
+          "meta.embedded.block.xml.php": "xml",
+          "meta.embedded.block.html.php": "html",
+          "source.sql.embedded.php": "sql",
+          "text.xml.embedded.php": "xml",
+          "text.html.embedded.php": "html"
+        },
+        "tokenTypes": {
+          "meta.embedded.block.sql.php": "other",
+          "meta.embedded.block.xml.php": "other",
+          "meta.embedded.block.html.php": "other",
+          "source.sql.embedded.php": "other",
+          "text.xml.embedded.php": "other",
+          "text.html.embedded.php": "other",
+          "string.unquoted.heredoc.php": "other",
+          "string.unquoted.nowdoc.php": "other"
+        }
+      },
+      {
+        "path": "./syntaxes/heredoc-inference.tmLanguage.json",
+        "scopeName": "source.php.heredoc.inference",
+        "injectTo": [
+          "text.html.php"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.sql.php": "sql",
+          "meta.embedded.block.xml.php": "xml",
+          "meta.embedded.block.html.php": "html",
+          "source.sql.embedded.php": "sql",
+          "text.xml.embedded.php": "xml",
+          "text.html.embedded.php": "html"
+        },
+        "tokenTypes": {
+          "meta.embedded.block.sql.php": "other",
+          "meta.embedded.block.xml.php": "other",
+          "meta.embedded.block.html.php": "other",
+          "source.sql.embedded.php": "other",
+          "text.xml.embedded.php": "other",
+          "text.html.embedded.php": "other",
+          "string.unquoted.heredoc.php": "other",
+          "string.unquoted.nowdoc.php": "other"
+        }
       },
       {
         "path": "./syntaxes/php-sql.tmLanguage.json",
         "scopeName": "source.php.sql",
         "injectTo": [
           "text.html.php"
-        ]
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.sql.php": "sql",
+          "source.sql.embedded.php": "sql"
+        },
+        "tokenTypes": {
+          "meta.embedded.block.sql.php": "other",
+          "source.sql.embedded.php": "other",
+          "string.unquoted.heredoc.php": "other",
+          "string.unquoted.nowdoc.php": "other"
+        }
       },
       {
         "path": "./syntaxes/php-xml.tmLanguage.json",
         "scopeName": "source.php.xml",
         "injectTo": [
           "text.html.php"
-        ]
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.xml.php": "xml",
+          "text.xml.embedded.php": "xml"
+        },
+        "tokenTypes": {
+          "meta.embedded.block.xml.php": "other",
+          "text.xml.embedded.php": "other",
+          "string.unquoted.heredoc.php": "other",
+          "string.unquoted.nowdoc.php": "other"
+        }
       },
       {
         "path": "./syntaxes/php-html.tmLanguage.json",
         "scopeName": "source.php.html",
         "injectTo": [
           "text.html.php"
-        ]
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.html.php": "html",
+          "text.html.embedded.php": "html"
+        },
+        "tokenTypes": {
+          "meta.embedded.block.html.php": "other",
+          "text.html.embedded.php": "other",
+          "string.unquoted.heredoc.php": "other",
+          "string.unquoted.nowdoc.php": "other"
+        }
       },
       {
         "path": "./syntaxes/php-js.tmLanguage.json",
         "scopeName": "source.php.js",
         "injectTo": [
           "text.html.php"
-        ]
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.javascript.php": "javascript",
+          "source.js.embedded.php": "javascript"
+        },
+        "tokenTypes": {
+          "meta.embedded.block.javascript.php": "other",
+          "source.js.embedded.php": "other",
+          "string.unquoted.heredoc.php": "other",
+          "string.unquoted.nowdoc.php": "other"
+        }
       }
     ]
   },

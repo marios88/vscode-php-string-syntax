@@ -1,0 +1,166 @@
+{
+  "scopeName": "source.php.heredoc.inference",
+  "injectionSelector": "L:string.unquoted.heredoc.php -meta.embedded.block.html.php -meta.embedded.block.xml.php -meta.embedded.block.sql.php -meta.embedded.block.javascript.php, L:string.unquoted.nowdoc.php -meta.embedded.block.html.php -meta.embedded.block.xml.php -meta.embedded.block.sql.php -meta.embedded.block.javascript.php",
+  "patterns": [
+    {
+      "include": "#sql-heredoc-line"
+    },
+    {
+      "include": "#xml-heredoc-line"
+    },
+    {
+      "include": "#html-heredoc-line"
+    }
+  ],
+  "repository": {
+    "sql-heredoc-line": {
+      "begin": "\\s*(?=\\b(?:SELECT|INSERT|UPDATE|DELETE|CREATE|REPLACE|ALTER|WITH)\\b)",
+      "end": "$",
+      "contentName": "meta.embedded.block.sql.php source.sql.embedded.php",
+      "name": "string.unquoted.embedded.sql.php",
+      "patterns": [
+        {
+          "include": "source.sql"
+        }
+      ]
+    },
+    "xml-heredoc-line": {
+      "begin": "\\s*(?=(?:<\\?xml|<svg)\\b)",
+      "end": "$",
+      "contentName": "meta.embedded.block.xml.php text.xml.embedded.php",
+      "name": "string.unquoted.embedded.xml.php",
+      "patterns": [
+        {
+          "include": "#xml-heredoc-content"
+        }
+      ]
+    },
+    "xml-heredoc-content": {
+      "patterns": [
+        {
+          "begin": "(<\\??)([a-zA-Z][a-zA-Z0-9]*)",
+          "end": "(?=(>|\\?>|\\/>)|$)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.xml"
+            },
+            "2": {
+              "name": "entity.name.tag.xml"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.end.xml"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "\\s*([a-zA-Z0-9:-]+)\\s*(=)\\s*",
+              "beginCaptures": {
+                "1": {
+                  "name": "entity.other.attribute-name.xml"
+                },
+                "2": {
+                  "name": "punctuation.separator.key-value.xml"
+                }
+              },
+              "end": "(?<=\")|(?<=')|(?=[\\s/>]|$)",
+              "patterns": [
+                {
+                  "begin": "\"",
+                  "end": "\"",
+                  "name": "string.quoted.double.xml"
+                },
+                {
+                  "begin": "'",
+                  "end": "'",
+                  "name": "string.quoted.single.xml"
+                },
+                {
+                  "match": "[^\\s/>]+",
+                  "name": "string.unquoted.xml"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "include": "text.xml"
+        }
+      ]
+    },
+    "html-heredoc-line": {
+      "begin": "\\s*(?=</?(?!script\\b)[A-Za-z][A-Za-z0-9]*\\b)",
+      "end": "$",
+      "contentName": "meta.embedded.block.html.php text.html.embedded.php",
+      "name": "string.unquoted.embedded.html.php",
+      "patterns": [
+        {
+          "include": "#html-heredoc-content"
+        }
+      ]
+    },
+    "html-heredoc-content": {
+      "patterns": [
+        {
+          "begin": "(<)([a-zA-Z][a-zA-Z0-9]*)",
+          "end": "(?=(>|\\/>)|$)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.html"
+            },
+            "2": {
+              "name": "entity.name.tag.html"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.end.html"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "\\s*([a-zA-Z0-9:-]+)\\s*(=)\\s*",
+              "beginCaptures": {
+                "1": {
+                  "name": "entity.other.attribute-name.html"
+                },
+                "2": {
+                  "name": "punctuation.separator.key-value.html"
+                }
+              },
+              "end": "(?<=\")|(?<=')|(?=[\\s/>]|$)",
+              "patterns": [
+                {
+                  "begin": "\"",
+                  "end": "\"",
+                  "name": "string.quoted.double.html"
+                },
+                {
+                  "begin": "'",
+                  "end": "'",
+                  "name": "string.quoted.single.html"
+                },
+                {
+                  "match": "[^\\s/>]+",
+                  "name": "string.unquoted.html"
+                }
+              ]
+            },
+            {
+              "match": "\\s*([a-zA-Z0-9:-]+)(?=[\\s/>]|$)",
+              "captures": {
+                "1": {
+                  "name": "entity.other.attribute-name.html"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "include": "text.html.basic"
+        }
+      ]
+    }
+  }
+}
