@@ -15,7 +15,7 @@
   "repository": {
     "sql-heredoc-line": {
       "begin": "\\s*(?=\\b(?:SELECT|INSERT|UPDATE|DELETE|CREATE|REPLACE|ALTER|WITH)\\b)",
-      "while": "(^|\\G)",
+      "end": "^(?=\\h*[A-Za-z_][A-Za-z_0-9]*[;,]?\\h*$)",
       "contentName": "meta.embedded.block.sql.php source.sql.embedded.php",
       "name": "string.unquoted.embedded.sql.php",
       "patterns": [
@@ -26,7 +26,7 @@
     },
     "xml-heredoc-line": {
       "begin": "\\s*(?=(?:<\\?xml|<svg)\\b)",
-      "while": "(^|\\G)",
+      "end": "^(?=\\h*[A-Za-z_][A-Za-z_0-9]*[;,]?\\h*$)",
       "contentName": "meta.embedded.block.xml.php text.xml.embedded.php",
       "name": "string.unquoted.embedded.xml.php",
       "patterns": [
@@ -91,7 +91,7 @@
     },
     "html-heredoc-line": {
       "begin": "\\s*(?=</?[A-Za-z][A-Za-z0-9]*\\b)",
-      "while": "(^|\\G)",
+      "end": "^(?=(?:\\h*(?=[A-Za-z_]*[A-Z_])[A-Za-z_][A-Za-z_0-9]*|[A-Za-z_][A-Za-z_0-9]*)\\h*(?:[;,\\)\\]\\}]\\h*(?:[\\[\\(\\{]\\h*)?)?$)",
       "contentName": "meta.embedded.block.html.php text.html.embedded.php",
       "name": "string.unquoted.embedded.html.php",
       "patterns": [

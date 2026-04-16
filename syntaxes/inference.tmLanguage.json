@@ -437,6 +437,77 @@
           "include": "#embedded-script-string-single-quoted"
         },
         {
+          "begin": "(<)([a-zA-Z][a-zA-Z0-9]*)",
+          "end": "(?=(>|\\/>)|(?='))",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.html"
+            },
+            "2": {
+              "name": "entity.name.tag.html"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.end.html"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "\\s*([a-zA-Z0-9:-]+)\\s*(=)\\s*",
+              "beginCaptures": {
+                "1": {
+                  "name": "entity.other.attribute-name.html"
+                },
+                "2": {
+                  "name": "punctuation.separator.key-value.html"
+                }
+              },
+              "end": "(?<=\")|(?<=')|(?=[\\s/>]|')",
+              "patterns": [
+                {
+                  "begin": "\"",
+                  "end": "\"|(?=')",
+                  "name": "string.quoted.double.html",
+                  "patterns": [
+                    {
+                      "match": "\\\\[\\\\']",
+                      "name": "constant.character.escape.php"
+                    }
+                  ]
+                },
+                {
+                  "begin": "'",
+                  "end": "'|(?=')",
+                  "name": "string.quoted.single.html",
+                  "patterns": [
+                    {
+                      "match": "\\\\[\\\\']",
+                      "name": "constant.character.escape.php"
+                    }
+                  ]
+                },
+                {
+                  "match": "[^\\s/>']+",
+                  "name": "string.unquoted.html"
+                }
+              ]
+            },
+            {
+              "match": "\\s*([a-zA-Z0-9:-]+)",
+              "captures": {
+                "1": {
+                  "name": "entity.other.attribute-name.html"
+                }
+              }
+            },
+            {
+              "match": "\\\\[\\\\']",
+              "name": "constant.character.escape.php"
+            }
+          ]
+        },
+        {
           "include": "text.html.basic"
         }
       ]
