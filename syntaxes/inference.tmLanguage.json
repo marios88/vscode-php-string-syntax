@@ -267,7 +267,7 @@
           "name": "punctuation.definition.tag.end.html"
         }
       },
-      "end": "(?:(</)((?i:script))(\\s*>))|(?<!\\\\)(?=\")",
+      "end": "(?:(</)((?i:script))(\\s*>))|(?:(?<=<)(/)((?i:script))(\\s*>))|(?<!\\\\)(?=\")",
       "endCaptures": {
         "1": {
           "name": "punctuation.definition.tag.begin.html"
@@ -277,10 +277,23 @@
         },
         "3": {
           "name": "punctuation.definition.tag.end.html"
+        },
+        "4": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "5": {
+          "name": "entity.name.tag.html"
+        },
+        "6": {
+          "name": "punctuation.definition.tag.end.html"
         }
       },
       "name": "meta.embedded.block.html",
       "patterns": [
+        {
+          "match": "\\\\[\\\\\"']",
+          "name": "constant.character.escape.php"
+        },
         {
           "include": "source.php#interpolation_double_quoted"
         },
@@ -437,7 +450,7 @@
           "include": "#embedded-script-string-single-quoted"
         },
         {
-          "begin": "(<)([a-zA-Z][a-zA-Z0-9]*)",
+          "begin": "(<)(?!(?i:script|style)\\b)([a-zA-Z][a-zA-Z0-9]*)",
           "end": "(?=(>|\\/>)|(?='))",
           "beginCaptures": {
             "1": {
@@ -525,7 +538,7 @@
           "name": "punctuation.definition.tag.end.html"
         }
       },
-      "end": "(?:(</)((?i:script))(\\s*>))|(?<!\\\\)(?=')",
+      "end": "(?:(</)((?i:script))(\\s*>))|(?:(?<=<)(/)((?i:script))(\\s*>))|(?<!\\\\)(?=')",
       "endCaptures": {
         "1": {
           "name": "punctuation.definition.tag.begin.html"
@@ -535,12 +548,67 @@
         },
         "3": {
           "name": "punctuation.definition.tag.end.html"
+        },
+        "4": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "5": {
+          "name": "entity.name.tag.html"
+        },
+        "6": {
+          "name": "punctuation.definition.tag.end.html"
         }
       },
       "name": "meta.embedded.block.html",
       "patterns": [
         {
-          "include": "source.js"
+          "match": "\\\\.",
+          "name": "constant.character.escape.php"
+        },
+        {
+          "include": "source.php#interpolation_double_quoted"
+        },
+        {
+          "match": "//.*$",
+          "name": "comment.line.double-slash.js"
+        },
+        {
+          "begin": "/\\*",
+          "end": "\\*/|(?=</(?i:script))|(?<!\\\\)(?=')",
+          "name": "comment.block.js",
+          "patterns": [
+            {
+              "match": "\\*/",
+              "name": "punctuation.definition.comment.end.js"
+            }
+          ]
+        },
+        {
+          "match": "\\\\'(?:\\\\.|[^'\\\\])*\\\\'",
+          "name": "string.quoted.single.js"
+        },
+        {
+          "begin": "\"",
+          "end": "\"",
+          "name": "string.quoted.double.js",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.js"
+            }
+          ]
+        },
+        {
+          "match": "\\b(?:const|let|var|if|else|for|while|switch|case|break|continue|return|function|async|await|try|catch|finally|new|class|this)\\b",
+          "name": "keyword.control.js"
+        },
+        {
+          "match": "\\b\\d+(?:\\.\\d+)?\\b",
+          "name": "constant.numeric.js"
+        },
+        {
+          "match": "\\b[A-Za-z_$][A-Za-z0-9_$]*(?=\\s*\\()",
+          "name": "entity.name.function.js"
         }
       ]
     }

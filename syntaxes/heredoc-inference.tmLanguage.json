@@ -91,7 +91,7 @@
     },
     "html-heredoc-line": {
       "begin": "\\s*(?=</?[A-Za-z][A-Za-z0-9]*\\b)",
-      "end": "^(?=(?:\\h*(?=[A-Za-z_]*[A-Z_])[A-Za-z_][A-Za-z_0-9]*|[A-Za-z_][A-Za-z_0-9]*)\\h*(?:[;,\\)\\]\\}]\\h*(?:[\\[\\(\\{]\\h*)?)?$)",
+      "end": "^(?=\\h*(?=[A-Za-z_]*[A-Z_])[A-Za-z_][A-Za-z_0-9]*\\h*(?:[;,\\)\\]\\}].*)?$)",
       "contentName": "meta.embedded.block.html.php text.html.embedded.php",
       "name": "string.unquoted.embedded.html.php",
       "patterns": [
