@@ -7,9 +7,210 @@
     },
     {
       "include": "#xml-string-single-quoted"
+    },
+    {
+      "include": "#xml-heredoc"
+    },
+    {
+      "include": "#xml-nowdoc"
     }
   ],
   "repository": {
+    "xml-nowdoc": {
+      "begin": "(/\\*\\s?xml\\s?\\*/|/\\*\\s?svg\\s?\\*/)\\s*(<<<)(')([A-Za-z_][A-Za-z_0-9]*)\\3(?:\\r?\\n)",
+      "beginCaptures": {
+        "1": {
+          "name": "comment.block.php"
+        },
+        "2": {
+          "name": "punctuation.definition.string.begin.php"
+        },
+        "3": {
+          "name": "punctuation.definition.string.begin.php"
+        },
+        "4": {
+          "name": "keyword.operator.nowdoc.php"
+        }
+      },
+      "end": "^(\\4)(;?)",
+      "endCaptures": {
+        "1": {
+          "name": "keyword.operator.nowdoc.php"
+        },
+        "2": {
+          "name": "punctuation.terminator.expression.php"
+        }
+      },
+      "name": "string.unquoted.nowdoc.php",
+      "contentName": "meta.embedded.block.xml.php text.xml.embedded.php",
+      "patterns": [
+        {
+          "include": "#xml-nowdoc-content"
+        }
+      ]
+    },
+    "xml-heredoc": {
+      "begin": "(/\\*\\s?xml\\s?\\*/|/\\*\\s?svg\\s?\\*/)\\s*(<<<)(\"?)([A-Za-z_][A-Za-z_0-9]*)\\3(?:\\r?\\n)",
+      "beginCaptures": {
+        "1": {
+          "name": "comment.block.php"
+        },
+        "2": {
+          "name": "punctuation.definition.string.begin.php"
+        },
+        "3": {
+          "name": "punctuation.definition.string.begin.php"
+        },
+        "4": {
+          "name": "keyword.operator.heredoc.php"
+        }
+      },
+      "end": "^(\\4)(;?)",
+      "endCaptures": {
+        "1": {
+          "name": "keyword.operator.heredoc.php"
+        },
+        "2": {
+          "name": "punctuation.terminator.expression.php"
+        }
+      },
+      "name": "string.unquoted.heredoc.php",
+      "contentName": "meta.embedded.block.xml.php text.xml.embedded.php",
+      "patterns": [
+        {
+          "include": "#xml-heredoc-content"
+        }
+      ]
+    },
+    "xml-heredoc-content": {
+      "patterns": [
+        {
+          "begin": "(<\\??)([a-zA-Z][a-zA-Z0-9]*)",
+          "end": "(?=(>|\\?>|\\/>)|$)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.xml"
+            },
+            "2": {
+              "name": "entity.name.tag.xml"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.end.xml"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "\\s*([a-zA-Z0-9:-]+)\\s*(=)\\s*",
+              "beginCaptures": {
+                "1": {
+                  "name": "entity.other.attribute-name.xml"
+                },
+                "2": {
+                  "name": "punctuation.separator.key-value.xml"
+                }
+              },
+              "end": "(?<=\")|(?<=')|(?=[\\s/>]|$)",
+              "patterns": [
+                {
+                  "begin": "\"",
+                  "end": "\"",
+                  "name": "string.quoted.double.xml",
+                  "patterns": [
+                    {
+                      "include": "source.php#interpolation_double_quoted"
+                    }
+                  ]
+                },
+                {
+                  "begin": "'",
+                  "end": "'",
+                  "name": "string.quoted.single.xml",
+                  "patterns": [
+                    {
+                      "include": "source.php#interpolation_double_quoted"
+                    }
+                  ]
+                },
+                {
+                  "match": "[^\\s/>]+",
+                  "name": "string.unquoted.xml",
+                  "patterns": [
+                    {
+                      "include": "source.php#interpolation_double_quoted"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "include": "source.php#interpolation_double_quoted"
+            }
+          ]
+        },
+        {
+          "include": "source.php#interpolation_double_quoted"
+        },
+        {
+          "include": "text.xml"
+        }
+      ]
+    },
+    "xml-nowdoc-content": {
+      "patterns": [
+        {
+          "begin": "(<\\??)([a-zA-Z][a-zA-Z0-9]*)",
+          "end": "(?=(>|\\?>|\\/>)|$)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.xml"
+            },
+            "2": {
+              "name": "entity.name.tag.xml"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.end.xml"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "\\s*([a-zA-Z0-9:-]+)\\s*(=)\\s*",
+              "beginCaptures": {
+                "1": {
+                  "name": "entity.other.attribute-name.xml"
+                },
+                "2": {
+                  "name": "punctuation.separator.key-value.xml"
+                }
+              },
+              "end": "(?<=\")|(?<=')|(?=[\\s/>]|$)",
+              "patterns": [
+                {
+                  "begin": "\"",
+                  "end": "\"",
+                  "name": "string.quoted.double.xml"
+                },
+                {
+                  "begin": "'",
+                  "end": "'",
+                  "name": "string.quoted.single.xml"
+                },
+                {
+                  "match": "[^\\s/>]+",
+                  "name": "string.unquoted.xml"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "include": "text.xml"
+        }
+      ]
+    },
     "xml-string-double-quoted": {
       "begin": "(/\\*\\s?xml\\s?\\*/|/\\*\\s?svg\\s?\\*/)\\s*(\")",
       "beginCaptures": {
